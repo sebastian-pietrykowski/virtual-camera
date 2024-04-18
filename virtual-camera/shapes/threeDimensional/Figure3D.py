@@ -3,6 +3,7 @@ from typing import List
 import numpy as np
 import pygame
 
+from shapes.threeDimensional.Wall3D import Wall3D
 from view.Perspective import Perspective
 from shapes.threeDimensional.Edge3D import Edge3D
 from shapes.threeDimensional.Point3D import Point3D
@@ -12,10 +13,12 @@ from shapes.twoDimensional.Figure2D import Figure2D
 class Figure3D:
     __points: List[Point3D]
     __edges: List[Edge3D]
+    __walls: List[Wall3D]
 
-    def __init__(self, edges: List[Edge3D]):
+    def __init__(self, edges: List[Edge3D], walls: List[Wall3D]): # wall_colors: List[pygame.Color]
         self.__points = list({edge.get_point1() for edge in edges} | {edge.get_point2() for edge in edges})
         self.__edges = edges
+        self.__walls = walls
 
     def get_points(self):
         return self.__points
@@ -37,3 +40,7 @@ class Figure3D:
 
     def __transform_to_2d(self, screen: pygame.Surface, perspective: Perspective):
         return Figure2D([edge.transform_to_2d(screen, perspective) for edge in self.__edges if edge.is_visible()])
+
+    # def __create_walls(self):
+    #     # create walls from edges
+

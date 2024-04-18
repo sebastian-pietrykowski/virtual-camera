@@ -11,6 +11,9 @@ class Point3D:
     def __init__(self, x: int, y: int, z: int):
         self.__vector = np.array([x, y, z, 1])
 
+    def __str__(self):
+        return f"Point3D({self.get_x()}, {self.get_y()}, {self.get_z()})"
+
     def get_vector(self):
         return self.__vector
 

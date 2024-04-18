@@ -1,0 +1,2 @@
+class RubiksCubeCreator:
+    pass

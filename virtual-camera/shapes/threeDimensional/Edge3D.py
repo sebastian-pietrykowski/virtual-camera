@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 import numpy as np
 import pygame as pygame
 
@@ -9,11 +7,18 @@ from shapes.twoDimensional.Point2D import Point2D
 from view.Perspective import Perspective
 
 
-@dataclass
 class Edge3D:
     __point1: Point3D
     __point2: Point3D
     __color: pygame.Color
+
+    def __init__(self, point1: Point3D, point2: Point3D, color: pygame.Color):
+        self.__point1 = point1
+        self.__point2 = point2
+        self.__color = color
+
+    def __str__(self):
+        return f"Edge3D({self.__point1}, {self.__point2})"
 
     def get_point1(self):
         return self.__point1

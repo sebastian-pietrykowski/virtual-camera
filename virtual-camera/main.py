@@ -4,7 +4,7 @@ from view.Perspective import Perspective
 from view.PhotoMaker import PhotoMaker
 from view.World import World
 from view.Camera import Camera
-from shapes.threeDimensional.FigureInitializer import FigureInitializer
+from FigureInitializer import FigureInitializer
 
 
 def handle_keydown_event():
