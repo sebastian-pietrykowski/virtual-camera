@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 import pygame
 
@@ -29,6 +31,9 @@ class Point3D:
     def set_z(self, z: int):
         self.__vector[2] = z
 
+    def is_visible(self):
+        return self.get_z() > 0
+
     def translate(self, vector: np.array([int, int, int])):
         self.__vector = PointTransformer.translate(self, vector)
 
@@ -37,3 +42,15 @@ class Point3D:
 
     def transform_to_2d(self, perspective: Perspective, screen: pygame.Surface):
         return PointTransformer.transform_from_3d_to_2d(self, perspective, screen)
+
+    def distance_to(self, point: 'Point3D'):
+        return np.sqrt(sum((self.__vector[:3] - point.get_vector()[:3]) ** 2))
+
+    @staticmethod
+    def get_center_point(points: List['Point3D']) -> 'Point3D':
+        if not points:
+            raise ValueError("No points provided")
+        x = sum(point.get_x() for point in points) / len(points)
+        y = sum(point.get_y() for point in points) / len(points)
+        z = sum(point.get_z() for point in points) / len(points)
+        return Point3D(x, y, z)

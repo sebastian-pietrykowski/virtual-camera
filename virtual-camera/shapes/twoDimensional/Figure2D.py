@@ -22,6 +22,6 @@ class Figure2D:
     def get_edges(self):
         return self.__edges
 
-    def draw(self, screen):
+    def draw_edges(self, screen):
         for edge in self.__edges:
             edge.draw(screen)

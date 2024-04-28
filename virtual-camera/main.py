@@ -1,5 +1,6 @@
 import pygame
 
+from WorkMode import WorkMode
 from view.Perspective import Perspective
 from view.PhotoMaker import PhotoMaker
 from view.World import World
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((Camera.SCREEN_WIDTH, Camera.SCREEN_HEIGHT))
 
     world = World(FigureInitializer.initialize_figures())
-    camera = Camera(world, Perspective(), screen)
+    camera = Camera(world, Perspective(), screen, WorkMode.WALLS)
     photo_maker = PhotoMaker(screen, camera)
 
     pygame.display.flip()

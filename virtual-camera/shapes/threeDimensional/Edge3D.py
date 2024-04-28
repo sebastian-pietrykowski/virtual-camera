@@ -38,20 +38,20 @@ class Edge3D:
         self.__point2.rotate(degree, axis)
 
     def is_visible(self):
-        return self.__point1.get_z() > 0 or self.__point2.get_z() > 0
+        return self.__point1.is_visible() or self.__point2.is_visible()
 
     def __is_partially_invisible(self):
         return self.__point1.get_z() <= 0 or self.__point2.get_z() <= 0
 
     def transform_to_2d(self, screen: pygame.Surface, perspective: Perspective):
-        if not self.is_visible():
-            raise ValueError("Edge is not visible")
+        # if not self.is_visible():
+        #     raise ValueError("Edge is not visible")
 
         point1_2d = self.__point1.transform_to_2d(perspective, screen)
         point2_2d = self.__point2.transform_to_2d(perspective, screen)
         if self.__is_partially_invisible():
+            print(f"Edge partially invisible: {self}")
             Edge3D.__cut_edge_to_screen_size(point1_2d, point2_2d, screen)
-            return Edge2D(point1_2d, point2_2d, self.__color)
 
         return Edge2D(point1_2d, point2_2d, self.__color)
 
@@ -85,7 +85,14 @@ class Edge3D:
         if t_enter > t_exit:
             return  # Line is completely outside
 
-        point1.set_x(x1 + t_enter * dx)
-        point1.set_y(y1 + t_enter * dy)
-        point2.set_x(x1 + t_exit * dx)
-        point2.set_y(y1 + t_exit * dy)
+        point1.set_x(round(x1 + t_enter * dx))
+        point1.set_y(round(y1 + t_enter * dy))
+        point2.set_x(round(x1 + t_exit * dx))
+        point2.set_y(round(y1 + t_exit * dy))
+
+    def is_point_on_edge(self, point: Point3D) -> bool:
+        epsilon = 1e-6  # tolerance for floating point comparison
+        total_length = self.get_point1().distance_to(self.get_point2())
+        length1 = self.get_point1().distance_to(point)
+        length2 = point.distance_to(self.get_point2())
+        return abs(total_length - (length1 + length2)) < epsilon

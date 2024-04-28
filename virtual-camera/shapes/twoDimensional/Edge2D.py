@@ -13,11 +13,17 @@ class Edge2D:
         self.__point2 = point2
         self.__color = color
 
+    def __str__(self):
+        return f"Edge2D({self.__point1}, {self.__point2}, {self.__color})"
+
     def get_point1(self):
         return self.__point1
 
     def get_point2(self):
         return self.__point2
+
+    def get_points(self) -> list[Point2D]:
+        return [self.__point1, self.__point2]
 
     def get_color(self):
         return self.__color

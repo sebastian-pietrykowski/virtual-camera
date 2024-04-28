@@ -27,11 +27,11 @@ class PointTransformer:
 
     @staticmethod
     def translate(point: Point3D, vector: np.array([int, int, int])):
-        return PointTransformer.__create_translation_transformation_matrix(vector) @ point.get_vector()
+        return np.round(PointTransformer.__create_translation_transformation_matrix(vector) @ point.get_vector()).astype(int)
 
     @staticmethod
     def rotate(point: Point3D, degree: float, axis: str):
-        return PointTransformer.__create_rotation_transformation_matrix(np.deg2rad(degree), axis) @ point.get_vector()
+        return np.round(PointTransformer.__create_rotation_transformation_matrix(np.deg2rad(degree), axis) @ point.get_vector()).astype(int)
 
     @staticmethod
     def __create_projection_matrix(screen: pygame.Surface):
