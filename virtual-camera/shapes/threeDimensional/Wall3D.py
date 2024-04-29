@@ -29,15 +29,15 @@ class Wall3D:
 
         self.__edges = edges
         self.__color = color
-        self.__points = list({edge.get_point1() for edge in edges} | {edge.get_point2() for edge in edges})
+        self.__points = self.__get_points_from_edges(edges)
         print('sorted points', ','.join(str(point) for point in self.__points))
 
         x_values = [point.get_x() for point in self.__points]
         y_values = [point.get_y() for point in self.__points]
         z_values = [point.get_z() for point in self.__points]
 
-        if not (len(set(x_values)) == 1 or len(set(y_values)) == 1 or len(set(z_values)) == 1):
-            raise ValueError("Wall points must not be in one line", ''.join(str(point) for point in self.__points))
+        # if not (len(set(x_values)) == 1 or len(set(y_values)) == 1 or len(set(z_values)) == 1):
+        #     raise ValueError("Wall points must not be in one line", ''.join(str(point) for point in self.__points))
 
     def get_points(self):
         return self.__points
@@ -260,3 +260,15 @@ class Wall3D:
     #         walls.append(Wall3D(edges, self.__color))
     #
     #     return walls
+    def __get_points_from_edges(self, edges: List[Edge3D]):
+        points = []
+
+        for edge in edges:
+            point1 = edge.get_point1()
+            if point1 not in points:
+                points.append(point1)
+            point2 = edge.get_point2()
+            if point2 not in points:
+                points.append(point2)
+
+        return points

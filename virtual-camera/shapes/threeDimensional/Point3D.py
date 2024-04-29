@@ -8,9 +8,9 @@ from shapes.PointTransformer import PointTransformer
 
 
 class Point3D:
-    __vector: np.array([int, int, int, int])
+    __vector: np.array([float, float, float, float])
 
-    def __init__(self, x: int, y: int, z: int):
+    def __init__(self, x: float, y: float, z: float):
         self.__vector = np.array([x, y, z, 1])
 
     def __str__(self):

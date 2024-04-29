@@ -1,4 +1,3 @@
-import math
 from typing import List, Optional
 
 import numpy as np
@@ -94,6 +93,9 @@ class BspTree:
         # self.__value = partition_wall
 
     def split_wall(self, wall: Wall3D, partition_wall: Wall3D) -> tuple[Wall3D, Wall3D]:
+        print('zaczynam dzielenie')
+        print('wall', wall)
+        print('wall points', ', '.join(str(p) for p in wall.get_points()))
         front_points = []
         back_points = []
 
@@ -101,8 +103,11 @@ class BspTree:
             next_index = (index + 1) % len(wall.get_points())
             next_point = wall.get_points()[next_index]
 
-            current_dot_product = np.dot(current_point.get_vector()[:3] - partition_wall.get_points()[0].get_vector()[:3], partition_wall.calculate_normal_vector())
-            next_dot_product = np.dot(next_point.get_vector()[:3] - partition_wall.get_points()[0].get_vector()[:3], partition_wall.calculate_normal_vector())
+            current_dot_product = np.dot(current_point.get_vector()[:3] - partition_wall.get_points()[0].get_vector()[:3], partition_wall.calculate_normal_vector()).astype(np.int64)
+            next_dot_product = np.dot(next_point.get_vector()[:3] - partition_wall.get_points()[0].get_vector()[:3], partition_wall.calculate_normal_vector()).astype(np.int64)
+            print('current dot product', current_dot_product)
+            print('next dot product', next_dot_product)
+            print('mult dot product', current_dot_product * next_dot_product)
 
             if current_dot_product >= 0:
                 front_points.append(current_point)
@@ -112,14 +117,15 @@ class BspTree:
                 print('dodaję do back points', current_point)
 
             if current_dot_product * next_dot_product < 0:
-                print('current point', current_point)
-                print('current dot product', current_dot_product)
-                print('next point', next_point)
-                print('next dot product', next_dot_product)
+                # print('current point', current_point)
+                # print('current dot product', current_dot_product, type(current_dot_product))
+                # print('next point', next_point)
+                # print('next dot product', next_dot_product, type(next_dot_product))
+                # print('multiplied', current_dot_product * next_dot_product, type(current_dot_product * next_dot_product))
                 t = current_dot_product / (current_dot_product - next_dot_product)
                 print('t', t)
-                intersection_point = (current_point.get_vector()[:3] + t * (
-                            next_point.get_vector()[:3] - current_point.get_vector()[:3]))
+                intersection_point = np.round(current_point.get_vector()[:3] + t * (
+                            next_point.get_vector()[:3] - current_point.get_vector()[:3])).astype(int)
                 print('różne dla', current_point, 'i', next_point, "; dodaję intersection point", intersection_point)
                 front_points.append(Point3D(*intersection_point))
                 back_points.append(Point3D(*intersection_point))
@@ -166,6 +172,7 @@ class BspTree:
         print('front points', ''.join(str(p) for p in front_points))
         print('back points', ''.join(str(p) for p in back_points))
         print('all points', ''.join(str(p) for p in wall.get_points()))
+        print('wall', wall)
         print('partition wall', partition_wall)
         print('\n\n\n')
 
@@ -178,6 +185,7 @@ class BspTree:
         if not (len(back_wall.get_points()) == 4 or len(back_wall.get_points()) == 0):
             raise ValueError('Back wall has 3 points.')
 
+        print('ended splitting')
         return front_wall, back_wall
 
     # def draw_tree(self, screen: pygame.Surface, perspective: Perspective) -> None:
