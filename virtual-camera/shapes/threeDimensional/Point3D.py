@@ -3,6 +3,7 @@ from typing import List
 import numpy as np
 import pygame
 
+from shapes.threeDimensional import Edge3D
 from view.Perspective import Perspective
 from shapes.PointTransformer import PointTransformer
 
@@ -54,3 +55,18 @@ class Point3D:
         y = sum(point.get_y() for point in points) / len(points)
         z = sum(point.get_z() for point in points) / len(points)
         return Point3D(x, y, z)
+
+    @staticmethod
+    def get_points_from_edges(edges: List[Edge3D]):
+        points = []
+        point_counts = {}
+
+        for edge in edges:
+            for point in [edge.get_point1(), edge.get_point2()]:
+                if point not in point_counts:
+                    point_counts[point] = 0
+                point_counts[point] += 1
+                if point_counts[point] % 2 == 0:
+                    points.append(point)
+
+        return points

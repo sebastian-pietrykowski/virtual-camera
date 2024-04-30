@@ -44,13 +44,9 @@ class Edge3D:
         return self.__point1.get_z() <= 0 or self.__point2.get_z() <= 0
 
     def transform_to_2d(self, screen: pygame.Surface, perspective: Perspective):
-        # if not self.is_visible():
-        #     raise ValueError("Edge is not visible")
-
         point1_2d = self.__point1.transform_to_2d(perspective, screen)
         point2_2d = self.__point2.transform_to_2d(perspective, screen)
         if self.__is_partially_invisible():
-            print(f"Edge partially invisible: {self}")
             Edge3D.__cut_edge_to_screen_size(point1_2d, point2_2d, screen)
 
         return Edge2D(point1_2d, point2_2d, self.__color)

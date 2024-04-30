@@ -15,7 +15,7 @@ class Figure3D:
     __edges: List[Edge3D]
     __walls: List[Wall3D]
 
-    def __init__(self, edges: List[Edge3D], walls: List[Wall3D]):  # wall_colors: List[pygame.Color]
+    def __init__(self, edges: List[Edge3D], walls: List[Wall3D]):
         self.__points = list({edge.get_point1() for edge in edges} | {edge.get_point2() for edge in edges})
         self.__edges = edges
         self.__walls = walls
@@ -38,13 +38,11 @@ class Figure3D:
             point.rotate(degree, axis)
 
     def draw_edges(self, screen, perspective):
+        print(len(self.__edges))
+        print(',\n'.join([str(edge) for edge in self.__edges]))
         figure_2d = self.__transform_to_2d(screen, perspective)
+        print(',\n'.join([str(edge) for edge in figure_2d.get_edges()]))
         figure_2d.draw_edges(screen)
-
-        # for wall in self.__walls:
-        #     if wall.is_visible():
-        #         figure_2d = wall.transform_to_2d(screen, perspective)
-        #         figure_2d.draw_edges(screen)
 
     def get_visible_polygons(self):
         return [wall for wall in self.__walls if wall.is_visible()]

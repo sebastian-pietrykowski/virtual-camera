@@ -5,7 +5,7 @@ from shapes.threeDimensional.Figure3D import Figure3D
 
 class World:
     MOVE_STEP = 10
-    ROTATION_DEGREES = 45.
+    ROTATION_DEGREES = 90.
 
     __figures_3d: list[Figure3D]
 
