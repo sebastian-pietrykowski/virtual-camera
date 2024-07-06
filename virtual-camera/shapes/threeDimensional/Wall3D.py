@@ -43,7 +43,6 @@ class Wall3D:
     def draw(self, screen: pygame.Surface, perspective: Perspective):
         edges_2d = [edge.transform_to_2d(screen, perspective) for edge in self.__edges]
         points_2d_tuples = list((point.get_x(), point.get_y()) for edge in edges_2d for point in edge.get_points())
-        center = (screen.get_width()/2 + screen.get_width()/2)
 
         if len(points_2d_tuples) >= 3:
             pygame.draw.polygon(screen, self.__color, points_2d_tuples)

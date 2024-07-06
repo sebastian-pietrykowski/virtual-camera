@@ -55,6 +55,7 @@ if __name__ == '__main__':
 
     pygame.display.flip()
     camera.render()
+    clock = pygame.time.Clock()
 
     running = True
     while running:
@@ -64,4 +65,4 @@ if __name__ == '__main__':
             elif event.type == pygame.KEYDOWN:
                 handle_keydown_event()
         handle_key_pressed()
-        pygame.time.Clock().tick(Camera.FRAME_RATE)
+        clock.tick(Camera.FRAME_RATE)

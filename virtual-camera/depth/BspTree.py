@@ -19,10 +19,10 @@ class BspTree:
         self.__back = None
         self.__walls = walls
 
-    def get_left(self):
+    def get_front(self):
         return self.__front
 
-    def get_right(self):
+    def get_back(self):
         return self.__back
 
     def get_value(self):
